@@ -1,5 +1,6 @@
 package com.project.lms.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,12 @@ public class CourseService {
 
     @Autowired
     private CourseRepository courseRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private EnrollmentRepository enrollmentRepository;
 
     //Create course.
     public Course createCourse(String instructorName, Course course) {
@@ -35,5 +42,20 @@ public class CourseService {
     //Get all courses.
     public List<Course> getAllCourses() {
         return courseRepository.findAll();
+    }
+
+    //Enroll in course.
+    public Enrollment enrollInCourse(String studentUsername, String courseName) {
+        User student = userRepository.findByUsername(studentUsername)
+            .orElseThrow(() -> new RuntimeException("Student not found"));
+        Course course = courseRepository.findByName(courseName)
+            .orElseThrow(() -> new RuntimeException("Course not found"));
+
+        Enrollment enrollment = new Enrollment();
+        enrollment.setStudentName(studentUsername);
+        enrollment.setCourseName(courseName);
+        enrollment.setEnrolledAt(LocalDateTime.now());
+
+        return enrollmentRepository.save(enrollment);
     }
 }

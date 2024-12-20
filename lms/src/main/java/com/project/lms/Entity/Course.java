@@ -1,37 +1,28 @@
 package com.project.lms.Entity;
 
 import jakarta.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "courses")
 public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
     @Column(nullable = false)
     private String description;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String instructorUsername;
 
-    @ManyToMany
-    @JoinTable(
-        name = "course_students",
-        joinColumns = @JoinColumn(name = "course_id"),
-        inverseJoinColumns = @JoinColumn(name = "student_id")
-    )
-    private List<User> students;
-
-    // @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
-    // private List<Quiz> quizzes;
-
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
-    private List<Assignment> assignments;
+    private List<Assignment> assignments = new ArrayList<>();
 
     // Getters and Setters
     public Long getId() {
@@ -66,21 +57,6 @@ public class Course {
         this.instructorUsername = instructorUsername;
     }
 
-    public List<User> getStudents() {
-        return students;
-    }
-
-    public void setStudents(List<User> students) {
-        this.students = students;
-    }
-
-    // public List<Quiz> getQuizzes() {
-    //     return quizzes;
-    // }
-
-    // public void setQuizzes(List<Quiz> quizzes) {
-    //     this.quizzes = quizzes;
-    // }
 
     public List<Assignment> getAssignments() {
         return assignments;
@@ -89,6 +65,5 @@ public class Course {
     public void setAssignments(List<Assignment> assignments) {
         this.assignments = assignments;
     }
-
 
 }

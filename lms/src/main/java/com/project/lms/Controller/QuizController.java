@@ -13,43 +13,43 @@ import com.project.lms.Repository.*;
 @RequestMapping("/quizzes")
 public class QuizController {
 
-    @Autowired
-    private QuizService quizService;
+    // @Autowired
+    // private QuizService quizService;
 
-    @Autowired
-    private QuizRepository quizRepository;
+    // @Autowired
+    // private QuizRepository quizRepository;
 
-    @Autowired
-    private AuthenticationController authenticationController;
+    // @Autowired
+    // private AuthenticationController authenticationController;
 
-    @PostMapping("/create")
-     public ResponseEntity<Quiz> registerQuiz(@RequestParam String username, 
-        @RequestParam String password, 
-        @RequestBody Quiz quiz) {
-        if (!authenticationController.isInstructor(username, password)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
-        }
+    // @PostMapping("/create")
+    //  public ResponseEntity<Quiz> registerQuiz(@RequestParam String username, 
+    //     @RequestParam String password, 
+    //     @RequestBody Quiz quiz) {
+    //     if (!authenticationController.isInstructor(username, password)) {
+    //         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+    //     }
 
-        Quiz newQuiz = quizService.createQuiz(username, quiz);
-        quizRepository.save(quiz);
-        return new ResponseEntity<>(newQuiz, HttpStatus.CREATED);
-    }
+    //     Quiz newQuiz = quizService.createQuiz(username, quiz);
+    //     quizRepository.save(quiz);
+    //     return new ResponseEntity<>(newQuiz, HttpStatus.CREATED);
+    // }
 
 
-    @PostMapping("/submit/{id}")
-    public ResponseEntity<String> submitQuiz(@RequestParam String username,
-        @RequestParam String password,
-        @PathVariable Long id) {
-        if (!authenticationController.isStudent(username, password)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Only students can submit quizzes.");
-        }
-        if (quizService.submitQuiz(id, username)) {
-            return ResponseEntity.ok("Quiz submitted successfully.");
-        }
-        else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Quiz not found.");
-        }
+    // @PostMapping("/submit/{id}")
+    // public ResponseEntity<String> submitQuiz(@RequestParam String username,
+    //     @RequestParam String password,
+    //     @PathVariable Long id) {
+    //     if (!authenticationController.isStudent(username, password)) {
+    //         return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Only students can submit quizzes.");
+    //     }
+    //     if (quizService.submitQuiz(id, username)) {
+    //         return ResponseEntity.ok("Quiz submitted successfully.");
+    //     }
+    //     else {
+    //         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Quiz not found.");
+    //     }
         
-    }
+    // }
 
 }

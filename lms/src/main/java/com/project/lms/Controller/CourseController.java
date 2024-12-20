@@ -19,6 +19,8 @@ public class CourseController {
     @Autowired
     private  CourseRepository courseRepository;
     @Autowired
+    private  EnrollmentRepository enrollmentRepository;
+    @Autowired
     private AuthenticationController authenticationController;
 
     @PostMapping("/register")
@@ -51,4 +53,17 @@ public class CourseController {
         List<Course> courses = courseService.getAllCourses();
         return ResponseEntity.ok(courses);
     }
+
+    @PostMapping("/enroll")
+    public ResponseEntity<Enrollment> enrollInCourse(@RequestParam String username,
+        @RequestParam String password, 
+        @RequestBody Enrollment enrollment) {
+        if (!authenticationController.isStudent(username, password)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+        }
+        Enrollment newEnrollment = courseService.enrollInCourse(username, enrollment.getCourseName());
+        enrollmentRepository.save(newEnrollment);
+        return new ResponseEntity<>(newEnrollment, HttpStatus.CREATED);
+    }
+
 }

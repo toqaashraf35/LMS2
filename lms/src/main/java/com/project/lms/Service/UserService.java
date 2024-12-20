@@ -40,7 +40,8 @@ public class UserService {
 
     //Authenticate user.
     public Optional<User>  authenticate(String username, String password) {
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByUsername(username)
+            .orElseThrow(() -> new RuntimeException("Course not found"));
         if (user != null && user.getPassword().equals(password)) {
             return Optional.of(user); 
         }

@@ -3,7 +3,6 @@ package com.project.lms.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import com.project.lms.Repository.*;
 import com.project.lms.Entity.*;
 
@@ -21,7 +20,8 @@ public class AuthenticationController {
     }
 
     public boolean isInstructor(String username, String password) {
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByUsername(username)
+            .orElseThrow(() -> new RuntimeException("Student not found"));
         if (user != null && user.getPassword().equals(password)) {
             return "instructor".equals(user.getRole());
         }
@@ -30,7 +30,8 @@ public class AuthenticationController {
     }
 
     public boolean isStudent(String username, String password) {
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByUsername(username)
+            .orElseThrow(() -> new RuntimeException("Student not found"));
         if (user != null && user.getPassword().equals(password)) {
             return "student".equals(user.getRole());
         }

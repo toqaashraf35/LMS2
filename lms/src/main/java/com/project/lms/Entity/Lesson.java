@@ -2,15 +2,23 @@ package com.project.lms.Entity;
 
 import jakarta.persistence.*;
 
-
+@Entity
 public class Lesson {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany
-    @JoinColumn(name = "course_id", nullable = false)
-    private Course course;
+    @Column(nullable = false, unique = true)
+    private String name;
+    
+    @Column(nullable = false)
+    private String courseName;
+
+    // @ManyToOne
+    // @JoinColumn(name = "course_id", nullable = false)
+    // private Course course;
+
 
     //Getters and Setters
     public Long getId() {
@@ -21,12 +29,19 @@ public class Lesson {
         this.id = id;
     }
 
-    public Course getCourse() {
-        return course;
+    public String getname() {
+        return name;
     }
 
-    public void setCourse(Course course) {
-        this.course = course;
+    public void setName(String name) {
+        this.name = name;
+    }
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 
 }

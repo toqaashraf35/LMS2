@@ -1,15 +1,9 @@
 package com.project.lms.Repository;
 
-import com.project.lms.Entity.Lesson;
+import com.project.lms.Entity.Enrollment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface LessonRepository extends JpaRepository<Lesson, Long> {
-    
+public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
 }
-
-// public class LessonRepository{
-
-// }
-
