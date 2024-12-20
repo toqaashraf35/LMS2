@@ -9,7 +9,4 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
     
 }
 
-// public class LessonRepository{
-
-// }
 

@@ -3,9 +3,6 @@ package com.project.lms.Entity;
 import java.time.LocalDateTime;
 import java.util.*;
 import jakarta.persistence.*;
-
-
-
 @Entity
 public class Quiz {
 

@@ -3,41 +3,45 @@ package com.project.lms.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.project.lms.Repository.*;
-import com.project.lms.Entity.*;
+import com.project.lms.Repository.UserRepository;
+import com.project.lms.Entity.User;
 
 @RestController
 @RequestMapping("/api")
 public class AuthenticationController {
-     @Autowired
+
+    @Autowired
     private UserRepository userRepository;
     
     private static final String USERNAME = "farida";
     private static final String PASSWORD = "farida123@gmail.com";
 
+    //isAdmin Function.
     public boolean isAdmin(String username, String password) {
         return USERNAME.equals(username) && PASSWORD.equals(password);
     }
-
+    
+    //isInstructor Function.
     public boolean isInstructor(String username, String password) {
         User user = userRepository.findByUsername(username)
             .orElseThrow(() -> new RuntimeException("Student not found"));
         if (user != null && user.getPassword().equals(password)) {
             return "instructor".equals(user.getRole());
         }
-
         return false;
     }
-
+    
+    //isStudent Function.
     public boolean isStudent(String username, String password) {
         User user = userRepository.findByUsername(username)
             .orElseThrow(() -> new RuntimeException("Student not found"));
         if (user != null && user.getPassword().equals(password)) {
             return "student".equals(user.getRole());
         }
-
         return false;
     }
+
+    //Authentication.
     @GetMapping("/secure-endpoint")
     public ResponseEntity<String> secureEndpoint(@RequestParam String username, @RequestParam String password) {
         if (isAdmin(username, password)) {

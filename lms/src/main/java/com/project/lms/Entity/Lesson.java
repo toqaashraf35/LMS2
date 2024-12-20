@@ -1,7 +1,6 @@
 package com.project.lms.Entity;
 
 import jakarta.persistence.*;
-
 @Entity
 public class Lesson {
     
@@ -14,11 +13,6 @@ public class Lesson {
     
     @Column(nullable = false)
     private String courseName;
-
-    // @ManyToOne
-    // @JoinColumn(name = "course_id", nullable = false)
-    // private Course course;
-
 
     //Getters and Setters
     public Long getId() {

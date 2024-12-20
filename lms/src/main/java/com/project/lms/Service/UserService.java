@@ -3,8 +3,8 @@ package com.project.lms.Service;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.project.lms.Repository.*;
-import com.project.lms.Entity.*;
+import com.project.lms.Repository.UserRepository;
+import com.project.lms.Entity.User;
 
 @Service
 public class UserService {
@@ -12,17 +12,17 @@ public class UserService {
     @Autowired
     private  UserRepository userRepository;
 
-    //Create user.
+    //Create User.
     public User createUser(User user) {
         return userRepository.save(user);
     }
 
-    //Delete user.
+    //Delete User.
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
 
-    //Update user.
+    //Update User.
     public User updateUser(Long id, User user) {
         User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -33,7 +33,7 @@ public class UserService {
         return userRepository.save(existingUser);
     }
 
-    //Get user.
+    //Get User.
     public Optional<User> getUserById(Long id) {
         return userRepository.findById(id);
     }

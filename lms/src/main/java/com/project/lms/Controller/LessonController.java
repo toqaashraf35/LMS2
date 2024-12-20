@@ -3,13 +3,14 @@ package com.project.lms.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
-import com.project.lms.Entity.*;
-import com.project.lms.Repository.*;
-import com.project.lms.Service.*;
+import com.project.lms.Entity.Lesson;
+import com.project.lms.Repository.LessonRepository;
+import com.project.lms.Service.LessonService;
 
 @RestController
 @RequestMapping("/lessons")
 public class LessonController {
+
     @Autowired
     private LessonService lessonService;
     @Autowired
@@ -17,7 +18,8 @@ public class LessonController {
     @Autowired
     private AuthenticationController authenticationController;
 
-    @PostMapping("/register")
+    //Create Lesson.
+    @PostMapping("/create")
     public ResponseEntity<Lesson> registerCourse(
             @RequestParam String username, 
             @RequestParam String password, 
@@ -29,7 +31,6 @@ public class LessonController {
         lessonRepository.save(lesson);
         return new ResponseEntity<>(newLesson, HttpStatus.CREATED);
     }
-
 
 }
 

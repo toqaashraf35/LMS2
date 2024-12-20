@@ -2,10 +2,9 @@ package com.project.lms.Entity;
 
 import java.time.LocalDateTime;
 import jakarta.persistence.*;
-
-
 @Entity
 public class Enrollment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -15,13 +14,6 @@ public class Enrollment {
 
     @Column(nullable = false)
     private String studentUsername;
-    // @ManyToOne
-    // @JoinColumn(name = "course_id", nullable = false)
-    // private Course course;
-
-    // @ManyToOne
-    // @JoinColumn(name = "student_id", nullable = false)
-    // private User student;
 
     @Column(nullable = false)
     private LocalDateTime enrolledDate;
@@ -49,15 +41,7 @@ public class Enrollment {
     public void setStudentName(String studentUsername) {
         this.studentUsername = studentUsername;
     }
-
-    // public Course getCourse() {
-    //     return course;
-    // }
-
-    // public void setCourse(Course course) {
-    //     this.course = course;
-    // }
-
+    
     public LocalDateTime getEnrolledAt() {
         return enrolledDate;
     }
