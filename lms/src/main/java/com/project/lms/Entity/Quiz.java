@@ -2,7 +2,6 @@ package com.project.lms.Entity;
 
 import jakarta.persistence.*;
 
-
 @Entity
 public class Quiz {
 
@@ -16,8 +15,6 @@ public class Quiz {
     @ManyToOne
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
-
-
 
     public Long getId() {
         return id;

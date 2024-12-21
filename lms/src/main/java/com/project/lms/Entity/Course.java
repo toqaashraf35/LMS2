@@ -1,8 +1,6 @@
 package com.project.lms.Entity;
 
 import jakarta.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 @Entity
 @Table(name = "courses")
 public class Course {
@@ -20,8 +18,6 @@ public class Course {
     @Column(nullable = true)
     private String instructorUsername;
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
-    private List<Assignment> assignments = new ArrayList<>();
 
     // Getters and Setters
     public Long getId() {
@@ -54,15 +50,6 @@ public class Course {
 
     public void setInstructorUsername(String instructorUsername) {
         this.instructorUsername = instructorUsername;
-    }
-
-
-    public List<Assignment> getAssignments() {
-        return assignments;
-    }
-
-    public void setAssignments(List<Assignment> assignments) {
-        this.assignments = assignments;
     }
 
 }

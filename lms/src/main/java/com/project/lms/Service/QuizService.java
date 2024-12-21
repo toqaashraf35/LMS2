@@ -11,41 +11,35 @@ public class QuizService {
 
     @Autowired
     private QuizRepository quizRepository;
-
     @Autowired
     private CourseRepository courseRepository;
-
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private SubmissionRepository submissionRepository;
-// Create Quiz
+
+    // Create Quiz
     public Quiz createQuiz(Long courseId, Quiz quiz) {
         Course course = courseRepository.findById(courseId)
-                .orElseThrow(() -> new RuntimeException("Course not found"));
+            .orElseThrow(() -> new RuntimeException("Course not found"));
         quiz.setCourse(course);
         return quizRepository.save(quiz);
     }
 
-
+    //Submit Quiz.
     public Submission submitQuiz(Long quizId, String studentUsername) {
-       
         boolean quizExists = quizRepository.existsById(quizId);
         if (!quizExists) {
             throw new RuntimeException("Quiz not found");
         }
-        User student = userRepository.findByUsername(studentUsername);
-        if (student==null || !"student".equals(student.getRole())) {
-                throw new RuntimeException("User is not a student");
-        } 
+        User student = userRepository.findByUsername(studentUsername)
+        .orElseThrow(() -> new RuntimeException("Student not found"));
+
         Submission submission = new Submission();;
         submission.setQuizId(quizId);
         submission.setStudentUsername(studentUsername);
         submission.setStudentId(student.getId());
        
-
-               // Check if the student already submitted
         List<Submission> existingSubmissions = submissionRepository.findByQuizId(quizId);
         boolean alreadySubmitted = existingSubmissions.stream()
             .anyMatch(sub -> sub.getStudentId().equals(submission.getStudentId()));
@@ -54,25 +48,25 @@ public class QuizService {
         }
         return submissionRepository.save(submission);
     }
-    public Submission assignScore(Long QuizId , Long StudentId , Double Score , String Feedback) { // 
-        // Find the submission
-        Submission submission = submissionRepository.findByQuizIdAndStudentId(QuizId,StudentId)
-                .orElseThrow(() -> new RuntimeException("Submission not found"));
 
+    //Assign a Score.
+    public Submission assignScore(Long QuizId , Long StudentId , Double Score , String Feedback) { // 
+        Submission submission = submissionRepository.findByQuizIdAndStudentId(QuizId,StudentId)
+            .orElseThrow(() -> new RuntimeException("Submission not found"));
         submission.setScore(Score);
         submission.setFeedback(Feedback);
-
-        // Save and return the updated submission
         return submissionRepository.save(submission);
     }
     
+    //Get the grade and feedback.
     public Submission getStudentScoreAndFeedback(Long quizId, String studentUsername) {
-        User student = userRepository.findByUsername(studentUsername);
+        User student = userRepository.findByUsername(studentUsername)
+        .orElseThrow(() -> new RuntimeException("Student not found"));
         return submissionRepository.findByQuizIdAndStudentId(quizId, student.getId())
                 .orElseThrow(() -> new RuntimeException("Submission not found"));
     }
 
-    // Fetch all quizzes for a course
+    //Get all Quizzes per Course
     public List<Quiz> getQuizzesByCourse(Long courseId) {
         return quizRepository.findByCourseId(courseId);
     }
@@ -80,7 +74,7 @@ public class QuizService {
     // Get Quiz Details
     public Quiz getQuizById(Long quizId) {
         return quizRepository.findById(quizId)
-                .orElseThrow(() -> new RuntimeException("Quiz not found"));
+            .orElseThrow(() -> new RuntimeException("Quiz not found"));
     }
 
 }

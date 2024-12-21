@@ -31,8 +31,6 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Notification> notifications;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Attendance> attendances;
 
     @PrePersist
     protected void onCreate() {
@@ -105,14 +103,6 @@ public class User {
 
     public void setNotifications(List<Notification> notifications) {
         this.notifications = notifications;
-    }
-
-    public List<Attendance> getAttendances() {
-        return attendances;
-    }
-
-    public void setAttendances(List<Attendance> attendances) {
-        this.attendances = attendances;
     }
 
 }
