@@ -2,7 +2,6 @@ package com.project.lms.Entity;
 
 import jakarta.persistence.*;
 
-
 @Entity
 public class Submission {
 
@@ -14,13 +13,13 @@ public class Submission {
     private Long quizId;
 
     @Column(nullable = false)
-    private Long studentId; // Directly store the student ID
+    private Long studentId; 
 
     @Column(nullable = false)
     private String studentUsername;
 
-    private Double score; // This can be set by the instructor later
-    
+    private Double score; 
+
     private String Feedback;
 
     // Getters and Setters
@@ -38,7 +37,7 @@ public class Submission {
     }
 
     public void setQuizId(Long quizId) {
-        this.quizId = quizId;
+        this.quizId =quizId;
     }
 
     public Long getStudentId() {

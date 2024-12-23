@@ -33,6 +33,13 @@ public class QuizController {
         quizRepository.save(createdQuiz);
         return new ResponseEntity<>(createdQuiz, HttpStatus.CREATED);
     }
+
+    //Delete Quiz.
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteQuiz(@PathVariable Long id) {
+        quizService.deleteQuiz(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
     
     //Get all Quizzes per Course.
     @GetMapping("/course/{courseId}")
@@ -73,7 +80,7 @@ public class QuizController {
         return ResponseEntity.ok(updatedSubmission);
     }
 
-    //Get the grade.
+    //Get the score.
     @GetMapping("get-score/{quizId}")
     public ResponseEntity<Map<String, Object>> getFeedback(
         @PathVariable Long quizId,

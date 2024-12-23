@@ -2,7 +2,7 @@ package com.project.lms.Entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -27,10 +27,6 @@ public class User {
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Notification> notifications;
-
 
     @PrePersist
     protected void onCreate() {
@@ -95,14 +91,6 @@ public class User {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public List<Notification> getNotifications() {
-    return notifications;
-    }
-
-    public void setNotifications(List<Notification> notifications) {
-        this.notifications = notifications;
     }
 
 }

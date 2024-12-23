@@ -69,5 +69,4 @@ public class Attendance {
         this.attendAt = attendAt;
     }
 
-
 }

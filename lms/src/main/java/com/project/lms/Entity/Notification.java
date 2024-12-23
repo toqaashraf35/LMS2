@@ -4,21 +4,26 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "notifications") 
 public class Notification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "from_email", nullable = false)
+    private String from;
+
+    @Column(name = "to_email", nullable = false)
+    private String to;
     @Column(nullable = false)
     private String message;
 
     @Column(nullable = false)
     private LocalDateTime sentAt;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @Column(nullable = false)
+    private boolean isRead;  // To track if the notification is read or not
 
     // Getters and Setters
     public Long getId() {
@@ -27,6 +32,22 @@ public class Notification {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getFromEmail() {
+        return from;
+    }
+
+    public void setFromEmail(String from) {
+        this.from = from;
+    }
+
+    public String getToEmail() {
+        return to;
+    }
+
+    public void setToEmail(String to) {
+        this.to = to;
     }
 
     public String getMessage() {
@@ -45,12 +66,11 @@ public class Notification {
         this.sentAt = sentAt;
     }
 
-    public User getUser() {
-        return user;
+    public boolean isRead() {
+        return isRead;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setRead(boolean read) {
+        isRead = read;
     }
-
 }

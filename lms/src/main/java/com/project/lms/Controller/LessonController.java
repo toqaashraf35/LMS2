@@ -23,17 +23,24 @@ public class LessonController {
     private AuthenticationController authenticationController;
 
     //Create Lesson.
-    @PostMapping("/create")
-    public ResponseEntity<Lesson> registerCourse(
+    @PostMapping("/create/{courseName}")
+    public ResponseEntity<Lesson> registerCourse(@PathVariable String courseName,
             @RequestParam String username, 
             @RequestParam String password, 
             @RequestBody Lesson lesson) {
         if (!authenticationController.isInstructor(username, password)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
         }
-        Lesson newLesson = lessonService.createLesson(lesson, lesson.getCourseName());
+        Lesson newLesson = lessonService.createLesson(lesson, courseName);
         lessonRepository.save(lesson);
         return new ResponseEntity<>(newLesson, HttpStatus.CREATED);
+    }
+    
+    //Delete Lesson.
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteLesson(@PathVariable Long id) {
+        lessonService.deleteLesson(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     //Set Attendance to Student.

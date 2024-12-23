@@ -21,7 +21,8 @@ public class EnrollmentController {
 
     //Enroll in Course.
     @PostMapping("/enroll")
-    public ResponseEntity<Enrollment> enrollInCourse(@RequestParam String username,
+    public ResponseEntity<Enrollment> enrollInCourse(
+    @RequestParam String username,
         @RequestParam String password, 
         @RequestBody Enrollment enrollment) {
         if (!authenticationController.isStudent(username, password)) {
@@ -45,27 +46,27 @@ public class EnrollmentController {
 
     //Get Students per Course.
     @GetMapping("/students/{courseName}")
-    public ResponseEntity<List<String>> getStudentNames(@RequestParam String username,
+    public ResponseEntity<List<User>> getStudentNames(@RequestParam String username,
         @RequestParam String password,
         @PathVariable String courseName) {
         if (!authenticationController.isInstructor(username, password) && !authenticationController.isAdmin(username, password)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
         }
-        List<String> studentNames = enrollmentService.getStudentNamesByCourseName(courseName);
+        List<User> studentNames = enrollmentService.getStudentNamesByCourseName(courseName);
         return ResponseEntity.ok(studentNames);
     }
 
     //Delete Student from Course.
-    @DeleteMapping("/students/delete/{courseName}")
+    @DeleteMapping("/students/delete")
     public ResponseEntity<String> removeStudentFromCourse(@RequestParam String username,
         @RequestParam String password,
-        @RequestParam String studentUsername,
-        @PathVariable String courseName) {
+        @RequestBody RemoveStudentRequestDTO request
+        ) {
         if (!authenticationController.isInstructor(username, password)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied.");
         }
         try {
-            enrollmentService.removeStudentFromCourse(username, studentUsername, courseName);
+            enrollmentService.removeStudentFromCourse(username, request.getStudentUsername(), request.getCourseName());
             return ResponseEntity.ok("Student removed from the course.");
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());

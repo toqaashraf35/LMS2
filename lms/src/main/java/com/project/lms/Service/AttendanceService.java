@@ -15,10 +15,12 @@ public class AttendanceService {
     @Autowired
     private LessonRepository lessonRepository;
 
-
+    //Set Attendance.
     public Attendance markAttendance(Attendance attendance, String studentUsername, String lessonName){
+        @SuppressWarnings("unused")
         User student = userRepository.findByUsername(studentUsername)
             .orElseThrow(() -> new RuntimeException("Student not found"));
+        @SuppressWarnings("unused")
         Lesson lesson = lessonRepository.findByName(lessonName)
             .orElseThrow(() -> new RuntimeException("Lesson not found"));
         attendance.setLessonName(lessonName);
@@ -26,7 +28,9 @@ public class AttendanceService {
         return attendanceRepository.save(attendance);
     }
 
+    //Get Attendance.
     public Attendance getAttendance(String username){
+        @SuppressWarnings("unused")
         User student = userRepository.findByUsername(username)
             .orElseThrow(() -> new RuntimeException("Student not found"));
         return attendanceRepository.findByStudentUsername(username)

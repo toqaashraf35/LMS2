@@ -13,13 +13,17 @@ public class LessonService {
     @Autowired
     private CourseRepository courseRepository;
 
-    //Create Lesson.
+    // Create Lesson.
     public Lesson createLesson(Lesson lesson, String courseName) {
         Course course = courseRepository.findByName(courseName)
             .orElseThrow(() -> new RuntimeException("Course not found"));
-        lesson.setCourseName(courseName);
+        lesson.setCourse(course);
         return lessonRepository.save(lesson);
     }
 
-    
+    // Delete Lesson.
+    public void deleteLesson(Long id){
+        lessonRepository.deleteById(id);
+    }
+   
 }
