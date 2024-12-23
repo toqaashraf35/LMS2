@@ -10,13 +10,13 @@ import com.project.lms.Entity.*;
 public class QuizService {
 
     @Autowired
-    private QuizRepository quizRepository;
+    public QuizRepository quizRepository;
     @Autowired
-    private CourseRepository courseRepository;
+    public CourseRepository courseRepository;
     @Autowired
-    private UserRepository userRepository;
+    public UserRepository userRepository;
     @Autowired
-    private SubmissionRepository submissionRepository;
+    public SubmissionRepository submissionRepository;
 
     // Create Quiz
     public Quiz createQuiz(Long courseId, Quiz quiz) {
