@@ -10,7 +10,7 @@ import com.project.lms.Entity.User;
 public class UserService {
 
     @Autowired
-    private  UserRepository userRepository;
+    public  UserRepository userRepository;
 
     //Create User.
     public User createUser(User user) {

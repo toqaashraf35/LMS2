@@ -10,7 +10,7 @@ import com.project.lms.Entity.Course;
 public class CourseService {
 
     @Autowired
-    private CourseRepository courseRepository;
+    public CourseRepository courseRepository;
 
     //Create Course.
     public Course createCourse(String instructorName, Course course) {
